@@ -1,9 +1,41 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const NormalRange = (): JSX.Element => {
     const [updating, setUpdating] = useState(false);
     const [dragging, setDragging] = useState(false);
-    const x = useRef(0);
+    const [minValue, setMinValue] = useState(0);
+    const [maxValue, setMaxValue] = useState(100);
+    const marginLeft = 18;
+    const marginRight = marginLeft + 27.5;
+    const minX = useRef(marginLeft);
+    const maxX = useRef(marginRight);
+    const rangeWrapperRef = useRef<HTMLDivElement | null>(null);
+    const x = useRef(marginLeft);
+
+    const updateX = (newX: number) => {
+        if (x.current !== newX) {
+            x.current = newX;
+            if (!updating) {
+                setUpdating(true);
+                setTimeout(() => setUpdating(false), 100)
+            }
+        }
+    }
+
+    useEffect(() => {
+        const updateLimits = () => {
+            if (rangeWrapperRef.current) {
+                const rect = rangeWrapperRef.current.getBoundingClientRect();
+                maxX.current = rect.right - marginRight;
+                updateX(Math.max(Math.min(x.current, maxX.current), minX.current));
+            }
+        }
+        updateLimits();
+        window.addEventListener('resize', updateLimits);
+        () => {
+            window.removeEventListener('resize', updateLimits)
+        }
+    }, [])
 
     const handleMouseDown = () => {
         setDragging(true);
@@ -16,19 +48,23 @@ const NormalRange = (): JSX.Element => {
     const handleMouseMove = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         event.preventDefault();
         event.stopPropagation();
-        const newX = event.clientX -18;
+        const newX = event.clientX - 18;
         if (dragging && x.current !== newX) {
-            x.current = newX;
-            if (!updating) {
-                setUpdating(true);
-                setTimeout(()=>setUpdating(false), 100)
-            }
+            updateX(Math.max(Math.min(newX, maxX.current), minX.current));
         }
     }
 
-    return <div onMouseUp={handleMouseUp} onMouseMove={handleMouseMove} onMouseLeave={handleMouseUp} style={{ display: "flex", position: "relative", alignItems: "center", width: "100%", height: "6rem", backgroundColor: '#CBD5E1', cursor: dragging ? "grabbing" : undefined }}>
-        <div style={{ width: "100%", height: "0.25rem", backgroundColor: '#0F172A' }} />
-        <div onMouseDown={handleMouseDown} className="dot" style={{ left: x.current, cursor: dragging ? "grabbing" : "grab" }}/>
+    return <div ref={rangeWrapperRef} onMouseUp={handleMouseUp} onMouseMove={handleMouseMove} onMouseLeave={handleMouseUp} className="rangeWrapper" style={{ cursor: dragging ? "grabbing" : undefined }}>
+        <div style={{ display: 'flex', flexDirection: 'column', position: 'relative' }}>
+            <div className="rangeLimit" />
+            <input type="text" value={minValue} onChange={(ev) => setMinValue(Number.parseInt(ev.currentTarget.value))} style={{ position: 'absolute', border: '0px', borderRadius: '5px', bottom: '-23px', left: '-20px', width: '40px' }} />
+        </div>
+        <div className="rangeLine" />
+        <div style={{ display: 'flex', flexDirection: 'column', position: 'relative' }}>
+            <div className="rangeLimit" />
+            <input type="text" value={maxValue} onChange={(ev) => setMaxValue(Number.parseInt(ev.currentTarget.value))} style={{ position: 'absolute', border: '0px', borderRadius: '5px', bottom: '-23px', left: '-20px', width: '40px' }} />
+        </div>
+        <div onMouseDown={handleMouseDown} className="rangeDot" style={{ left: x.current, cursor: dragging ? "grabbing" : "grab" }} />
     </div>
 }
 
