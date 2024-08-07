@@ -44,9 +44,7 @@
   border-radius: 20px;
   width: 1.25rem;
   height: 1.25rem;
-  transition-duration: 300ms;
   background-color: #0F172A;
-  opacity: 50%;
 }
 
 .rangeDot:hover {
