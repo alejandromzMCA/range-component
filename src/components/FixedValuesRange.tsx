@@ -1,4 +1,4 @@
-import { type ChangeEvent, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 const FixedValuesRange = ({ rangeLimitsValue: rangeValues, onValuesChange }: { rangeLimitsValue: number[]; onValuesChange?: (leftValue: number, rightValue: number) => void }): JSX.Element => {
     const [update, setUpdate] = useState(false);
@@ -123,15 +123,15 @@ const FixedValuesRange = ({ rangeLimitsValue: rangeValues, onValuesChange }: { r
         {rangeLimitsX.current?.map((rangeLimit) => {
             const rangeValue = rangeLimitsXMap.current.get(rangeLimit);
             return rangeValue ? (
-                <div key={rangeValue} className="rangeLimit" style={{ left: rangeLimit }}>
+                <div title={`Limit ${rangeValue}`} key={rangeValue} className="rangeLimit" style={{ left: rangeLimit }}>
                     <div className="rangeLimitLine" />
                     <label className="rangeLimitabel">{rangeValue}</label>
                 </div>
             ) : null
         }
         )}
-        <div onMouseDown={handleMouseDownLeft} className="rangeDot" style={{ left: leftX.current, transitionDuration: dragging ? '500ms' : '0ms', cursor: dragging ? "grabbing" : "grab" }} />
-        <div onMouseDown={handleMouseDownRight} className="rangeDot" style={{ left: rightX.current, transitionDuration: dragging ? '500ms' : '0ms', cursor: dragging ? "grabbing" : "grab" }} />
+        <div role="slider" onMouseDown={handleMouseDownLeft} title="Left drag handle" className="rangeDot" style={{ left: leftX.current, transitionDuration: dragging ? '500ms' : '0ms', cursor: dragging ? "grabbing" : "grab" }} />
+        <div role="slider" onMouseDown={handleMouseDownRight} title="Right drag handle" className="rangeDot" style={{ left: rightX.current, transitionDuration: dragging ? '500ms' : '0ms', cursor: dragging ? "grabbing" : "grab" }} />
     </div>
 }
 

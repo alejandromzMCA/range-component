@@ -108,8 +108,8 @@ const NormalRange = ({ minDefault, maxDefault, onValuesChange }: { minDefault: n
         <div ref={lineRef} className="rangeLine" />
         <input type="text" title="Range max limit" value={maxValue} onChange={handleMaxLimitChange} className="rangeLimitInput" />
         <span className="rangeLimitLabel" >€</span>
-        <div onMouseDown={handleMouseDownLeft} className="rangeDot" style={{ left: leftX.current, cursor: dragging ? "grabbing" : "grab" }} />
-        <div onMouseDown={handleMouseDownRight} className="rangeDot" style={{ left: rightX.current, cursor: dragging ? "grabbing" : "grab" }} />
+        <div role="slider" onMouseDown={handleMouseDownLeft} title="Left drag handle" className="rangeDot" style={{ left: leftX.current, cursor: dragging ? "grabbing" : "grab" }} />
+        <div role="slider" onMouseDown={handleMouseDownRight} title="Right drag handle" className="rangeDot" style={{ left: rightX.current, cursor: dragging ? "grabbing" : "grab" }} />
     </div>
 }
 
