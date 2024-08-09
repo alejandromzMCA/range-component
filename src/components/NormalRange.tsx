@@ -1,4 +1,4 @@
-import { type ChangeEvent, useEffect, useRef, useState } from "react";
+import React, { type ChangeEvent, useEffect, useRef, useState } from "react";
 
 const NormalRange = ({ minDefault, maxDefault, onValuesChange }: { minDefault: number; maxDefault: number, onValuesChange?: (leftValue: number, rightValue: number) => void }): JSX.Element => {
     const [updating, setUpdating] = useState(false);
