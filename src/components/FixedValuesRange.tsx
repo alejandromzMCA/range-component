@@ -116,7 +116,7 @@ const FixedValuesRange = ({ rangeLimitsValue: rangeValues, onValuesChange }: { r
             updateX({ newRightX: Math.max(Math.min(newX, maxX.current), leftX.current + 10) });
         }
     }
-
+    // console.log({ rangeLimitsX })
     const dragging = draggingLeft || draggingRight;
     return <div onMouseUp={handleMouseUp} onMouseMove={handleMouseMove} onMouseLeave={handleMouseUp} className="rangeWrapper" style={{ cursor: dragging ? "grabbing" : undefined }}>
         <div ref={lineRef} className="rangeLine" />

@@ -1,8 +1,7 @@
 import { expect, describe, it, vi } from 'vitest'
 import { fireEvent, render, screen } from '@testing-library/react'
-// import { userEvent } from '@testing-library/user-event'
 import React from 'react'
-import NormalRange from '../components/NormalRange'
+import NormalRange from './NormalRange'
 
 describe('NormalRange Component', () => {
     it('should call onValuesChange with correct values', async () => {
@@ -24,16 +23,4 @@ describe('NormalRange Component', () => {
         expect(await screen.findByDisplayValue('50')).toBeInTheDocument();
         expect(await screen.findByDisplayValue('200')).toBeInTheDocument();
     });
-    // it('should update values correctly on click and move', async () => {
-    //     const onValuesChangeMock = vi.fn();
-    //     render(<NormalRange minDefault={0} maxDefault={100} onValuesChange={onValuesChangeMock} />);
-
-    //     const leftDragHandle = screen.getByRole('slider', { name: "Left drag handle" });
-    //     const rightDragHandle = screen.getByRole('slider', { name: "Right drag handle" });
-
-    //     fireEvent.mouseDown(leftDragHandle);
-    //     fireEvent.mouseMove(leftDragHandle, {  });
-    //     fireEvent.mouseUp(leftDragHandle);
-    //     expect(onValuesChangeMock).toHaveBeenCalledWith(30, 100);
-    // });
 });
