@@ -17,17 +17,15 @@ describe('FixedValuesRange  Component', () => {
 
         expect(limits).toHaveLength(6);
     });
-    it('should call onValuesChange with correct values', async () => {
+    it('should call onValuesChange with correct values first time', async () => {
         const onValuesChangeMock = vi.fn();
         render(<FixedValuesRange rangeLimitsValue={[10, 30, 70, 100]} onValuesChange={onValuesChangeMock} />);
 
         expect(onValuesChangeMock).toHaveBeenCalledWith(10, 30);
     });
-    it('should diable dragging the left dot over right dot', async () => {
+    it('should disable dragging the left dot over right dot', async () => {
         const onValuesChangeMock = vi.fn();
         render(<FixedValuesRange rangeLimitsValue={[10, 30, 70, 100]} onValuesChange={onValuesChangeMock} />);
-
-        expect(onValuesChangeMock).toHaveBeenCalledWith(10, 30);
 
         const lefDot = screen.getByRole('slider', { name: "Left drag handle" });
         fireEvent.mouseDown(lefDot, { clientX: 100 });
@@ -39,8 +37,6 @@ describe('FixedValuesRange  Component', () => {
     it('should allow dragging the right dot to the right', async () => {
         const onValuesChangeMock = vi.fn();
         render(<FixedValuesRange rangeLimitsValue={[10, 30, 70, 100]} onValuesChange={onValuesChangeMock} />);
-
-        expect(onValuesChangeMock).toHaveBeenCalledWith(10, 30);
 
         const rightDot = screen.getByRole('slider', { name: "Right drag handle" });
         fireEvent.mouseDown(rightDot, { clientX: 100 });
