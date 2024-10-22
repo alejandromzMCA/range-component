@@ -1,6 +1,6 @@
-import React, { type ChangeEvent, useEffect, useRef, useState } from "react";
+import React, { type ChangeEvent, useEffect, useReducer, useRef, useState } from "react";
 
-const NormalRange = ({ minDefault, maxDefault, onValuesChange }: { minDefault: number; maxDefault: number, onValuesChange?: (leftValue: number, rightValue: number) => void }): JSX.Element => {
+const NormalRangeOld = ({ minDefault, maxDefault, onValuesChange }: { minDefault: number; maxDefault: number, onValuesChange?: (leftValue: number, rightValue: number) => void }): JSX.Element => {
     const [updating, setUpdating] = useState(false);
     const [draggingLeft, setDraggingLeft] = useState(false);
     const [draggingRight, setDraggingRight] = useState(false);
@@ -13,8 +13,6 @@ const NormalRange = ({ minDefault, maxDefault, onValuesChange }: { minDefault: n
     const lineRef = useRef<HTMLDivElement | null>(null);
     const leftX = useRef(marginLeft);
     const rightX = useRef(marginRight);
-
-
 
     const updateX = ({ newLeftX, newRightX }: { newLeftX?: number; newRightX?: number }) => {
         let update = false;
@@ -113,4 +111,4 @@ const NormalRange = ({ minDefault, maxDefault, onValuesChange }: { minDefault: n
     </div>
 }
 
-export default NormalRange;
+export default NormalRangeOld;

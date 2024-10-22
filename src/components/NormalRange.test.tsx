@@ -1,18 +1,18 @@
 import { expect, describe, it, vi } from 'vitest'
 import { fireEvent, render, screen } from '@testing-library/react'
 import React from 'react'
-import NormalRange from './NormalRange'
+import NormalRangeOld from './NormalRangeOld'
 
 describe('NormalRange Component', () => {
     it('should call onValuesChange with correct values', async () => {
         const onValuesChangeMock = vi.fn();
 
-        render(<NormalRange minDefault={0} maxDefault={100} onValuesChange={onValuesChangeMock} />);
+        render(<NormalRangeOld minDefault={0} maxDefault={100} onValuesChange={onValuesChangeMock} />);
 
         expect(onValuesChangeMock).toHaveBeenCalledWith(0, 100);
     });
     it('should update min and max values correctly', async () => {
-        render(<NormalRange minDefault={0} maxDefault={100} />);
+        render(<NormalRangeOld minDefault={0} maxDefault={100} />);
 
         const minInput = screen.getByRole('textbox', { name: "Range min limit" });
         const maxInput = screen.getByRole('textbox', { name: "Range max limit" });
@@ -25,13 +25,13 @@ describe('NormalRange Component', () => {
     });
     it('should call onValuesChange with correct values first time', async () => {
         const onValuesChangeMock = vi.fn();
-        render(<NormalRange minDefault={0} maxDefault={100} onValuesChange={onValuesChangeMock} />);
+        render(<NormalRangeOld minDefault={0} maxDefault={100} onValuesChange={onValuesChangeMock} />);
 
         expect(onValuesChangeMock).toHaveBeenCalledWith(0, 100);
     });
     it('should allow dragging the left dot and call onValuesChange with correct values', async () => {
         const onValuesChangeMock = vi.fn();
-        render(<NormalRange minDefault={0} maxDefault={100} onValuesChange={onValuesChangeMock} />);
+        render(<NormalRangeOld minDefault={0} maxDefault={100} onValuesChange={onValuesChangeMock} />);
 
         const lefDot = screen.getByRole('slider', { name: "Left drag handle" });
         fireEvent.mouseDown(lefDot, { clientX: 100 });
